@@ -13,20 +13,21 @@ class StockPricesEnv:
         random_index = random.randint(self.lookup, ts_len - self.interval)
         self.start_index = random_index - self.lookup
         self.end_index = random_index + self.interval
-        state = (self.ts[self.start_index : self.end_index], 0) # 0 own cash; 1 own asset
-        return state
+        self.state = (np.array(self.ts[self.start_index : self.end_index])/self.ts[self.start_index], 0) # 0 own cash; 1 own asset
+        return self.state
 
-    def step(self, action, state):
+    def step(self, action):
         self.start_index += 1
         self.end_index += 1
 
-        asset_state = state[1]
+        asset_state = self.state[1]
         new_asset_state = self.get_new_asset_state(asset_state, action)
-        new_state = (self.ts[self.start_index : self.end_index], new_asset_state)
+
+        self.new_state = (self.ts[self.start_index : self.end_index], new_asset_state)
         reward = self.calculate_reward()
         done = False
         info = {}
-        return new_state, reward, done, info
+        return self.new_state, reward, done, info
 
     def calculate_reward(self):
         return 0
