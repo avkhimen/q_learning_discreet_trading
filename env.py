@@ -35,18 +35,30 @@ class StockPricesEnv:
 
         return self.new_state, reward, done, info
 
-    def calculate_reward(self, action, new_asset_state):
-        if action == 0 and new_asset_state == 0:
+    def calculate_reward(self, action, asset_state, new_asset_state):
+        if action == 0 and new_asset_state == 0 and asset_state == 0:
             pass
-        elif action == 0 and new_asset_state == 1:
+        elif action == 0 and new_asset_state == 1 and asset_state == 0:
             pass
-        elif action == 1 and new_asset_state == 0:
+        elif action == 1 and new_asset_state == 0 and asset_state == 0:
             pass
-        elif action == 1 and new_asset_state == 1:
+        elif action == 1 and new_asset_state == 1 and asset_state == 0:
             pass
-        elif action == 2 and new_asset_state == 0:
+        elif action == 2 and new_asset_state == 0 and asset_state == 0:
             pass
-        elif action == 2 and new_asset_state == 1:
+        elif action == 2 and new_asset_state == 1 and asset_state == 0:
+            pass
+        elif action == 0 and new_asset_state == 0 and asset_state == 1:
+            pass
+        elif action == 0 and new_asset_state == 1 and asset_state == 1:
+            pass
+        elif action == 1 and new_asset_state == 0 and asset_state == 1:
+            pass
+        elif action == 1 and new_asset_state == 1 and asset_state == 1:
+            pass
+        elif action == 2 and new_asset_state == 0 and asset_state == 1:
+            pass
+        elif action == 2 and new_asset_state == 1 and asset_state == 1:
             pass
         reward = 0
         return reward
