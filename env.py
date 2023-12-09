@@ -13,7 +13,8 @@ class StockPricesEnv:
         random_index = random.randint(self.lookup, ts_len - self.interval)
         self.start_index = random_index - self.lookup
         self.end_index = random_index
-        self.state = (np.array(self.ts[self.start_index : self.end_index])/self.ts[self.start_index], 0) # 0 own cash; 1 own asset
+        self.initial_index = self.ts[self.start_index]
+        self.state = (np.array(self.ts[self.start_index : self.end_index])/self.initial_index, 0) # 0 own cash; 1 own asset
         self.episode_step = 0
         
         return self.state
@@ -33,34 +34,21 @@ class StockPricesEnv:
             done = True
         info = {}
 
+        self.state = self.new_state
+
         return self.new_state, reward, done, info
 
     def calculate_reward(self, action, asset_state, new_asset_state):
-        if action == 0 and new_asset_state == 0 and asset_state == 0:
-            pass
-        elif action == 0 and new_asset_state == 1 and asset_state == 0:
-            pass
-        elif action == 1 and new_asset_state == 0 and asset_state == 0:
-            pass
-        elif action == 1 and new_asset_state == 1 and asset_state == 0:
-            pass
-        elif action == 2 and new_asset_state == 0 and asset_state == 0:
-            pass
-        elif action == 2 and new_asset_state == 1 and asset_state == 0:
-            pass
-        elif action == 0 and new_asset_state == 0 and asset_state == 1:
-            pass
-        elif action == 0 and new_asset_state == 1 and asset_state == 1:
-            pass
-        elif action == 1 and new_asset_state == 0 and asset_state == 1:
-            pass
-        elif action == 1 and new_asset_state == 1 and asset_state == 1:
-            pass
-        elif action == 2 and new_asset_state == 0 and asset_state == 1:
-            pass
-        elif action == 2 and new_asset_state == 1 and asset_state == 1:
-            pass
+        # action = 0 buy asset
+        # action = 1 sell asset
+        # action = 2 do nothing
+
+        # 0 = own cash
+        # 1 = own asset
         reward = 0
+        elif action == 0 and new_asset_state == 1 and asset_state == 0:
+            reward = self.new_state[0][-1] - self.state[0][-1]
+
         return reward
 
     def get_new_asset_state(self, asset_state, action):
