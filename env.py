@@ -28,7 +28,7 @@ class StockPricesEnv:
 
         self.new_state = (self.ts[self.start_index : self.end_index], new_asset_state)
         self.episode_step += 1
-        reward = self.calculate_reward(action, new_asset_state)
+        reward = self.calculate_reward(action, asset_state, new_asset_state)
         done = False
         if self.episode_step == self.interval:
             done = True
@@ -46,7 +46,7 @@ class StockPricesEnv:
         # 0 = own cash
         # 1 = own asset
         reward = 0
-        elif action == 0 and new_asset_state == 1 and asset_state == 0:
+        if action == 0 and new_asset_state == 1 and asset_state == 0:
             reward = self.new_state[0][-1] - self.state[0][-1]
 
         return reward
@@ -68,7 +68,7 @@ class StockPricesEnv:
             new_asset_state = 0
         if action == 2 and asset_state == 0:
             new_asset_state = 0
-         if action == 2 and asset_state == 1:
+        if action == 2 and asset_state == 1:
             new_asset_state = 1
         
         return new_asset_state
