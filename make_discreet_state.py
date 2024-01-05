@@ -12,18 +12,18 @@ import numpy as np
 input_array = random_state
 
 # Define the ranges and their corresponding labels
-ranges = {
-    0: [0, 0.1],
-    1: [0.1, 0.2],
-    2: [0.2, 0.3],
-    3: [0.3, 0.4],
-    4: [0.4, 0.5],
-    5: [0.5, 0.6],
-    6: [0.6, 0.7],
-    7: [0.7, 0.8],
-    8: [0.8, 0.9],
-    9: [0.9, 1]
-}
+start = 0.9
+end = 1.1
+num_divisions = 100
+
+# Calculate the step size based on the number of divisions
+step = (end - start) / num_divisions
+
+# Generate the ranges dictionary
+ranges = {i: [start + i * step, start + (i + 1) * step] for i in range(num_divisions)}
+
+# Print the ranges dictionary
+print(ranges)
 
 # Function to convert a single value to its corresponding label based on ranges
 def convert_to_labels(value, ranges):
