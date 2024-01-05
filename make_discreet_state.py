@@ -1,12 +1,11 @@
 import numpy as np
 
-sh = (5,5,5)
+num_divisions = 200
+num_states = 3
 
-random_state = np.random.random(sh)
+random_state = np.random.random((num_states, num_divisions))
 
 print(random_state)
-
-import numpy as np
 
 # Your input numpy array with arbitrary shape
 input_array = random_state
@@ -14,7 +13,6 @@ input_array = random_state
 # Define the ranges and their corresponding labels
 start = 0.9
 end = 1.1
-num_divisions = 100
 
 # Calculate the step size based on the number of divisions
 step = (end - start) / num_divisions
